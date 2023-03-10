@@ -5,7 +5,7 @@ import Image from './components/Image';
 function App() {
   return (
     <div className="App">
-      <Image src={"assets/bank-logo.png"} className={"bankLogo"}/>
+      <Image src={"./src/assets/banklogo.png"} className={"bankLogo"}/>
       <TransactionList />
     </div>
   )
