@@ -1,5 +1,5 @@
 async function postTransaction(data:{}) {
-    const res = await fetch("http://localhost:3000/api/transactions", {
+    const res = await fetch("https://defiant-invented-bathtub.glitch.me/api/transactions", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

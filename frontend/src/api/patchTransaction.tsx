@@ -1,5 +1,5 @@
 async function patchTransaction(data: {}, id: number) {
-    const res = await fetch(`http://localhost:3000/api/transactions/${id}`, {
+    const res = await fetch(`https://defiant-invented-bathtub.glitch.me/api/transactions/${id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",

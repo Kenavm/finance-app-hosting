@@ -1,5 +1,5 @@
 async function fetchCategories() {
-    const baseUrl = "http://localhost:3000/api/categories";
+    const baseUrl = "https://defiant-invented-bathtub.glitch.me/api/categories";
     const res = await fetch(baseUrl);
     const data = await res.json();
     return data;
