@@ -1,20 +1,37 @@
 import * as d3 from "d3";
 import { useState, useRef, useEffect } from "react";
+import fetchCategories from "../../api/fetchCategories";
+import fetchTransactions from "../../api/fetchTransactions";
 import CategoryType from "../../utils/types/CategoryType";
 import TransactionType from "../../utils/types/TransactionType";
 
-export default function PieChart(props: {transactions: Array<TransactionType>, categories: Array<CategoryType>}) {
+export default function PieChart() {
+	const [categories, setCategories] = useState<Array<CategoryType>>([]);
+	const [transactions, setTransactions] = useState<Array<TransactionType>>([]);
 	const svgRef = useRef();
 
-	type CategoryIdCount = { [categoryId: number]: number };
-	const categoryIdCount = props.transactions.reduce((acc:CategoryIdCount, transaction) => {
+	useEffect(() => {
+		async function loadTransactionsData() {
+			setTransactions(await fetchTransactions());
+		}
+		loadTransactionsData();
+	}, [transactions]);
+
+	useEffect(() => {
+		async function loadCategoryData() {
+			setCategories(await fetchCategories());
+		}
+		loadCategoryData();
+	}, [categories]);
+
+	const categoryIdCount = transactions.reduce((acc, transaction) => {
 		const categoryId = transaction.categoryId;
 		acc[categoryId] = (acc[categoryId] || 0) + 1;
 		return acc;
-	}, {} as CategoryIdCount);
-	
+	}, {});
+
 	let data = Object.keys(categoryIdCount).map((categoryId) => {
-		const category = props.categories.find((c) => c.id === Number(categoryId));
+		const category = categories.find((c) => c.id === Number(categoryId));
 		const categoryName = category ? category.name : "i";
 		const categoryColor = category ? category.color : "white";
 		return {
@@ -73,11 +90,11 @@ export default function PieChart(props: {transactions: Array<TransactionType>, c
 			})
 			.style("text-anchor", "middle")
 			.append("tspan")
-			.text((d) => ` (${d3.format(".1%")(d.value / props.transactions.length)})`)
+			.text((d) => ` (${d3.format(".1%")(d.value / transactions.length)})`)
 			.style("font-size", "0.7em")
 			.attr("x", 0)
 			.attr("y", "1em");
-	}, [data, props.transactions]);
+	}, [data]);
 
 	return (
 		<div>

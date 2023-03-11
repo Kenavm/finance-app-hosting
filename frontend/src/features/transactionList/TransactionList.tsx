@@ -53,7 +53,6 @@ function TransactionList() {
 
   useEffect(() => {
     async function loadCategoryData() {
-      
       setCategories(await fetchCategories());
     }
     loadCategoryData();
@@ -107,10 +106,7 @@ function TransactionList() {
           sumOfAllIncome={sumOfAllIncome}
           sumOfAllExpenses={sumOfAllExpenses}
         />
-        <PieChart
-        transactions={transactions}
-        categories={categories}
-        />
+        <PieChart></PieChart>
       </div>
       <div className="containerButtons">
         <Button
@@ -177,16 +173,6 @@ function TransactionList() {
       <div className="editTransaction">
         {openEditTransactionModal && (
           <EditTransaction
-            headerText={"Edit Transaction"}
-            inputClassName={"input"}
-            typeText={"text"}
-            typeSelect={"select"}
-            typeDatepicker={"datetime-local"}
-            labelDescription={"Name of Transaction"}
-            labelDate={"When"}
-            labelAmount={"Amount"}
-            labelCategory={"Category"}
-            labelType={"Type"}
             descriptionToEdit={transactionToEdit.description}
             amountToEdit={transactionToEdit.amount.toString()}
             dateToEdit={transactionToEdit.date}
